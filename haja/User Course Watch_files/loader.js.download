@@ -1,0 +1,55 @@
+// Dynamically create and append style element with CSS
+const style = document.createElement('style');
+style.textContent = `
+        .loader-container {
+            display: flex!important;
+            align-items: center!important;
+            justify-content: center!important;
+        }
+            
+        .loader {
+            margin-left: 8px;
+            margin-right: -10px;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #3498db;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    `;
+
+// Function to set loading state
+function setLoadingState(button) {
+    document.head.appendChild(style);
+
+    // Disable the button
+    button.disabled = true;
+
+    $(button).addClass('loader-container')
+
+    // Show the loading indicator
+    const loader = document.createElement('div');
+    loader.className = 'loader';
+
+    // Append the loader container to the button
+    button.appendChild(loader);
+}
+
+// Function to remove loading state
+function removeLoadingState(button) {
+    // Enable the button
+    button.disabled = false;
+
+    // Remove the loading indicator
+    $(button).removeClass('loader-container')
+    $(document).find('.loader').remove()
+
+    // Remove the dynamically created style element
+    document.head.removeChild(style);
+}
